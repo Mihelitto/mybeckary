@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ prod.name }}{% endblock %}
+{% block content %}
+
+<h1><a href="/">Продукция</a> : <a href="{{ prod.category.section.get_absolute_url }}">{{ prod.category.section.name }}</a> >> <a href="{{ prod.category.get_absolute_url }}">{{ prod.category.name }}</a></h1>
+<div class="product-detail">
+    <img src="{{ prod.img.url }}">
+    <div>
+        <h2>{{ prod.name }}</h2>
+        <p>{{ prod.description }}</p>
+        <p class="price">Price {{ prod.price }} р.</p>
+
+        <form action="{% url "cart:cart_add" prod.id %}" method="post">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Add to cart">
+        </form>
+    </div>
+{{ product.description|linebreaks }}
+</div>
+
+{{ post.body|linebreaks }}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+
+{% if cart%}
+<h1>Ваша корзина</h1>
+<table class="cart">
+    <thead>
+    <tr>
+        <th>Изображение</th>
+        <th>Продукт</th>
+        <th>Количество</th>
+        <th>Удалить</th>
+        <th>Цена</th>
+        <th>Стоймость</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in cart %}
+    {% with product=item.product %}
+    <tr>
+        <td>
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.img %}{{ product.img }}
+{% else %}{% static "/not_found.jpg" %}{% endif %}">
+            </a>
+        </td>
+        <td>{{ product.name }}</td>
+        <td>
+            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                <input type="submit" value="изменить">
+                {% csrf_token %}
+            </form>
+        </td>
+        <td><a href="{%  url "cart:cart_remove" product.id %}">Удалить</a></td>
+        <td class="num">₽{{ item.price }}</td>
+        <td class="num">₽{{ item.total_price }}</td>
+    </tr>
+    {% endwith %}
+    {% endfor %}
+    <tr class="total">
+        <td>Всего</td>
+        <td colspan="2"></td>
+        <td colspan="2">
+            <a href="{% url "cart:cart_clear" %}" class="num" >Очистить корзину</a>
+        </td>
+        <td class="num">₽{{ cart.get_total_price }}</td>
+    </tr>
+    </tbody>
+</table>
+<p class="text-right">
+
+    <a href="/" class="button light">Продолжить покупки</a>
+    <a href="{% url "orders:order_create" %}" class="button">
+        Оформить заказ
+    </a>
+</p>
+
+{% else %}
+
+<p>Ваша корзина ещё пуста.</p>
+<p class="text-right">
+    <a href="/" class="button light">Начать покупки</a>
+</p>
+
+{% endif %}
+{% endblock %}

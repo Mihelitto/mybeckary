@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}My Shop <a href=""></a>{% endblock %}
+{% block content %}
+<h1><a href="/">Продукция</a> : {{ sec.name }}</h1>
+{% for cat in cat_list %}
+<h2>
+<a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+</h2>
+{{ post.body|truncatewords:30|linebreaks }}
+{% endfor %}
+{% endblock %}

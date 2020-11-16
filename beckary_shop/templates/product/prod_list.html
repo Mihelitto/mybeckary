@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}My Shop {% endblock %}
+{% block content %}
+<h1><a href="/">Продукция</a> : <a href="{{ cat.section.get_absolute_url }}">{{ cat.section.name }}</a> >> {{ cat.name }}</h1>
+{% for prod in prods %}
+<h2>
+<a href="{{ prod.get_absolute_url }}">{{ prod.name }}</a>
+</h2>
+<p class="date">Price: {{ prod.price }}</p>
+{{ post.body|truncatewords:30|linebreaks }}
+{% endfor %}
+{% include "product/pagination.html" with page=prods %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static "css/blog__.css" %}" rel="stylesheet">
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>Корзина</h2>
+    <p>
+        {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
+                <a href="{% url "cart:cart_detail" %}">
+                    Товаров: {{ total_items }} на
+                    {{ cart.get_total_price }} руб.
+                </a>
+            {% else %}
+                Ваша карзина пуста.
+            {% endif %}
+        {% endwith %}
+    </p>
+</div>
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
