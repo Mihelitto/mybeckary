@@ -66,9 +66,9 @@ class BakeryParser():
             else:
                 img = 'not_found.jpg'
 
-
-
+            #print(unicode(item['href'], "utf-8"),unicode(img, "utf-8"),unicode(item.text.strip(), "utf-8"),unicode(slug, "utf-8"))
             sec = Section(url = item['href'], img = img, name = item.text.strip(), slug = slug)
+
             sec.save()
 
             self.sections.append([item.text.strip(), item['href'], img_src])

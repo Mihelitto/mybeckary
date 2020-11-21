@@ -5,9 +5,9 @@ from django.core import serializers
 
 
 class Section(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
-    url = models.URLField()
+    name = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, unique=True)
+    url = models.URLField(max_length=100)
     img = models.ImageField(upload_to='section/')
     def get_absolute_url(self):
         return reverse('beckary_shop:cat_list', args=[self.slug])
@@ -16,10 +16,10 @@ class Section(models.Model):
         return self.name
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, unique=True)
     section = models.ForeignKey(Section, related_name='category', on_delete=models.CASCADE)
-    url = models.URLField()
+    url = models.URLField(max_length=100)
     img = models.ImageField()
     def get_absolute_url(self):
         return reverse('beckary_shop:prod_list', args=[self.section.slug, self.slug])
@@ -28,12 +28,12 @@ class Category(models.Model):
         return self.name
 
 class Product(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, unique=True)
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    url = models.URLField()
+    url = models.URLField(max_length=100)
     img = models.ImageField()
     def get_absolute_url(self):
         return reverse('beckary_shop:prod_detail', args=[self.category.section.slug, self.category.slug, self.slug])

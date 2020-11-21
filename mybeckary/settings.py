@@ -89,14 +89,28 @@ EMAIL_USE_TLS = True
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'mybeckary',
+#        'USER': 'root',
+#        'HOST': '127.0.0.1',
+#        'PASSWORD': '3287973mihelitto',
+        'OPTIONS':{
+            'init_command': 'ALTER DATABASE mybeckary CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci',
+            'read_default_file': 'mybeckary/my.cnf',
+        }
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         #'NAME': BASE_DIR / 'db.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
 
 CART_SESSION_ID = 'cart'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
